@@ -2,29 +2,55 @@ package com.example.zerodechet
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TaskRowListener {
+    override fun onTaskChange(objectId: String, isDone: Boolean) {
+            val task = _db.child(Statics.FIREBASE_TASK).child(objectId).child("done")
+            task.setValue(isDone)
+    }
+    override fun onTaskDelete(objectId: String) {
+        val task = _db.child(Statics.FIREBASE_TASK).child(objectId)
+        task.removeValue()
+    }
     lateinit var _db: DatabaseReference
+    lateinit var _adapter: TaskAdapter
+    var _taskList: MutableList<Task>? = null
+    var _taskListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            loadTaskList(dataSnapshot)
+        }
+        override fun onCancelled(databaseError: DatabaseError) {
+            // Getting Item failed, log a message
+            Log.w("MainActivity", "loadItem:onCancelled", databaseError.toException())
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         _db = FirebaseDatabase.getInstance().reference
+        _taskList = mutableListOf()
+        _adapter = TaskAdapter(this, _taskList!!)
+        listviewTask!!.setAdapter(_adapter)
         fab.setOnClickListener { view ->
            showFooter()
         }
-        btnAdd.setOnClickListener{addTask()}
+        btnAdd.setOnClickListener{
+            addTask()
+        }
+
+        _db.orderByKey().addValueEventListener(_taskListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -72,4 +98,42 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, "Task added to the list successfully" + task.objectId, Toast.LENGTH_SHORT).show()
     }
+
+    private fun loadTaskList(dataSnapshot: DataSnapshot) {
+        Log.d("MainActivity", "loadTaskList")
+
+        val tasks = dataSnapshot.children.iterator()
+
+        //Check if current database contains any collection
+        if (tasks.hasNext()) {
+
+            _taskList!!.clear()
+
+
+            val listIndex = tasks.next()
+            val itemsIterator = listIndex.children.iterator()
+
+            //check if the collection has any task or not
+            while (itemsIterator.hasNext()) {
+
+                //get current task
+                val currentItem = itemsIterator.next()
+                val task = Task.create()
+
+                //get current data in a map
+                val map = currentItem.getValue() as HashMap<String, Any>;
+
+                //key will return the Firebase ID
+                task.objectId = currentItem.key
+                task.done = map.get("done") as Boolean?
+                task.taskDesc = map.get("taskDesc") as String?
+                _taskList!!.add(task)
+            }
+        }
+
+        //alert adapter that has changed
+        _adapter.notifyDataSetChanged()
+
+    }
+
 }
