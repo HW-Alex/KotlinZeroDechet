@@ -104,7 +104,7 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
         //called when image was captured from camera intent
         if (resultCode == Activity.RESULT_OK){
             //set image captured to image view
-            imageView2.setImageURI(image_uri)
+            imageView.setImageURI(image_uri)
         }
     }
 
