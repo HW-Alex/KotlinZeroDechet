@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,68 +17,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/imageButton"
+    <TextView
+        android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Capture Image"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        android:hint="Titre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <EditText
-        android:id="@+id/txtTitle"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:hint="Titre"
-        app:layout_constraintStart_toStartOf="@+id/imageButton"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
-
-    <EditText
+    <TextView
         android:id="@+id/txtPrice"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
         android:hint="Prix"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOther" />
 
-    <EditText
+    <TextView
         android:id="@+id/txtRam"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="405dp"
+        android:layout_height="13dp"
+        android:layout_marginTop="16dp"
         android:hint="Ram"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
-    <EditText
+    <TextView
         android:id="@+id/txtHardDiskDrive"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:hint="Stockage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtScreenWidth" />
-
-    <EditText
-        android:id="@+id/txtProcessor"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:hint="Processeur"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRam" />
 
-    <EditText
-        android:id="@+id/txtScreenWidth"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/txtProcessor"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Taille d'Ecran"
+        android:layout_marginTop="16dp"
+        android:hint="Processeur"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHardDiskDrive" />
 
-    <EditText
-        android:id="@+id/txtOther"
+    <TextView
+        android:id="@+id/txtScreenWidth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:hint="Taille d'Ecran"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProcessor" />
+
+    <TextView
+        android:id="@+id/txtOther"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Autres Caractéristiques"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHardDiskDrive" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtScreenWidth" />
 </androidx.constraintlayout.widget.ConstraintLayout>

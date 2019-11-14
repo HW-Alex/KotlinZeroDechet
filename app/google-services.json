@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "290197860788",
-    "firebase_url": "https://zerodechet-57046.firebaseio.com",
-    "project_id": "zerodechet-57046",
-    "storage_bucket": "zerodechet-57046.appspot.com"
+    "project_number": "546993089605",
+    "firebase_url": "https://techbytrash.firebaseio.com",
+    "project_id": "techbytrash",
+    "storage_bucket": "techbytrash.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:290197860788:android:e423b41dcc8e8f61ca42e1",
+        "mobilesdk_app_id": "1:546993089605:android:4ea5a59f9480657c31072c",
         "android_client_info": {
           "package_name": "com.example.zerodechet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "290197860788-s11q65fnp4fl4jes4oeha0hrre7ivcq3.apps.googleusercontent.com",
+          "client_id": "546993089605-rksnjtgvt8cetkg08o41ga2e76v3ijip.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.zerodechet",
-            "certificate_hash": "0e0e5ae3950e81cdb0ce90d68f02a4b58dd07fa6"
+            "certificate_hash": "d7dfd08281e81349d4eb52495cc381b4a8d5ae74"
           }
         },
         {
-          "client_id": "290197860788-16f1jrg6t3q73jt3hspc38i80h8fr15v.apps.googleusercontent.com",
+          "client_id": "546993089605-e99rqipshsmniteepjpef0qcohk0f0io.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA_eYFY97xVTGikA1nj_EuH2Dey0Gta4eE"
+          "current_key": "AIzaSyCsMii88Z3IdBk4vDFd8TKB1Lt4UcEkA-g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "290197860788-16f1jrg6t3q73jt3hspc38i80h8fr15v.apps.googleusercontent.com",
+              "client_id": "546993089605-e99rqipshsmniteepjpef0qcohk0f0io.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -46,4 +46,3 @@
   ],
   "configuration_version": "1"
 }
-

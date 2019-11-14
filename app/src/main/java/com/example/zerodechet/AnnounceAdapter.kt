@@ -1,13 +1,13 @@
 package com.example.zerodechet
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.CheckBox
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
+import kotlinx.android.synthetic.main.announce_rows.*
 
 
 class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : BaseAdapter() {
@@ -50,6 +50,18 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
         }
         listRowHolder.modify.setOnClickListener {
             _rowListener.onAnnounceModify(it, objectId, title, price, ram, hardDiskDrive, processor, screenWidth, otherComponents)
+        }
+        listRowHolder.title.setOnClickListener {
+            val intent = Intent(it.context, AnnounceDetailActivity::class.java)
+            intent.putExtra("title", title)
+            intent.putExtra("price", price)
+            intent.putExtra("ram", ram)
+            intent.putExtra("hardDiskDrive", hardDiskDrive)
+            intent.putExtra("processor", processor)
+            intent.putExtra("screenWidth", screenWidth)
+            intent.putExtra("otherComponents",otherComponents)
+            // start your next activity
+            startActivity(it.context, intent, null)
         }
 
         return view

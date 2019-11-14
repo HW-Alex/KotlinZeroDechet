@@ -23,7 +23,18 @@
             android:name=".LoggedInActivity"
             android:label="Login">
         </activity>
+        <activity
+            android:name=".AnnounceDetailActivity"
+            android:label="Details">
+        </activity>
+        <activity
+            android:name=".AnnounceActivity"
+            android:label="Annonces Disponibles"
+            >
+        </activity>
     </application>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
