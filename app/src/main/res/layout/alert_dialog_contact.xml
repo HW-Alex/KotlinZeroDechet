@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Button to open camera-->
+
+    <EditText
+        android:id="@+id/txtSubject"
+        android:layout_width="368dp"
+        android:layout_height="43dp"
+        android:hint="Sujet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPrenom" />
+
+
+    <EditText
+        android:id="@+id/txtNom"
+        android:layout_width="368dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="24dp"
+        android:hint="Nom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtPrenom"
+        android:layout_width="368dp"
+        android:layout_height="43dp"
+        android:hint="Prenom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNom" />
+
+
+    <EditText
+        android:id="@+id/txtMessage"
+        android:layout_width="370dp"
+        android:layout_height="114dp"
+        android:hint="Votre Message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSubject" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

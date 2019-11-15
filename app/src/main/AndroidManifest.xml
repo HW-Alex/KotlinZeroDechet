@@ -25,26 +25,19 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".LoggedInActivity"
-            android:label="Login">
+            android:name=".LoggedInActivity">
         </activity>
         <activity
-            android:name=".AnnounceDetailActivity"
-            android:label="Details">
+            android:name=".AnnounceDetailActivity">
         </activity>
         <activity
-            android:name=".AnnounceActivity"
-            android:label="Annonces Disponibles"
-            >
+            android:name=".AnnounceActivity">
         </activity>
         <activity
-            android:name=".HardwareDetailActivity"
-            android:label="Details">
+            android:name=".HardwareDetailActivity">
         </activity>
         <activity
-            android:name=".HardwareActivity"
-            android:label="Pièces Disponibles"
-            >
+            android:name=".HardwareActivity">
         </activity>
     </application>
     <uses-permission android:name="android.permission.CAMERA"/>

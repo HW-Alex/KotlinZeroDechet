@@ -2,77 +2,197 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/fond"
+    android:orientation="vertical">
 
     <!--Button to open camera-->
 
+    <Button
+        android:id="@+id/btnContact"
+        android:layout_width="138dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/boutton_test"
+        android:text="Nous Contacter"
+        app:layout_anchor="@+id/btnLogin"
+        app:layout_anchorGravity="start|bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Button
+        android:id="@+id/btnReservation"
+        android:layout_width="139dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
+        android:background="@drawable/boutton_test"
+        android:text="Réserver"
+        app:layout_anchor="@+id/btnLogin"
+        app:layout_anchorGravity="start|bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="170dp"
-        android:layout_height="140dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_foreground"
+        android:layout_width="261dp"
+        android:layout_height="147dp"
+        android:layout_marginTop="4dp"
+        android:radius="25dp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="109dp"
-        android:layout_height="78dp"
-        android:hint="Titre"
-        tools:layout_editor_absoluteX="273dp"
-        tools:layout_editor_absoluteY="422dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="350dp"
+        android:layout_height="309dp"
+        android:layout_marginTop="32dp"
+        android:background="#6DCCCCCC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-    <TextView
-        android:id="@+id/txtPrice"
-        android:layout_width="238dp"
-        android:layout_height="61dp"
-        android:hint="Prix"
-        tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="559dp" />
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="350dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:hint=""
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtRam"
-        android:layout_width="224dp"
-        android:layout_height="66dp"
-        android:hint="Ram"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="389dp" />
+        <TextView
+            android:id="@+id/txtProcessor"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+            android:hint=""
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtScreenWidth" />
 
-    <TextView
-        android:id="@+id/txtHardDiskDrive"
-        android:layout_width="232dp"
-        android:layout_height="35dp"
-        android:hint="Stockage"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="189dp" />
+        <TextView
+            android:id="@+id/txtRam"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint=""
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtProcessor" />
 
-    <TextView
-        android:id="@+id/txtProcessor"
-        android:layout_width="122dp"
-        android:layout_height="41dp"
-        android:hint="Processeur"
-        tools:layout_editor_absoluteX="260dp"
-        tools:layout_editor_absoluteY="246dp" />
+        <TextView
+            android:id="@+id/txtHardDiskDrive"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint=""
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRam" />
 
-    <TextView
-        android:id="@+id/txtScreenWidth"
-        android:layout_width="152dp"
-        android:layout_height="51dp"
-        android:hint="Taille d'Ecran"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="246dp" />
+        <TextView
+            android:id="@+id/txtOther"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint=""
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtHardDiskDrive" />
 
-    <TextView
-        android:id="@+id/txtOther"
-        android:layout_width="161dp"
-        android:layout_height="47dp"
-        android:hint="Autres Caractéristiques"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="317dp" />
+
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint=""
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtOther" />
+
+        <TextView
+            android:id="@+id/txtScreenWidth"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint=""
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+
+        <TextView
+            android:id="@+id/lblProcessor"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+            android:hint="Processeur : "
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblScreenWidth" />
+
+        <TextView
+            android:id="@+id/lblRam"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint="Ram : "
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblProcessor" />
+
+        <TextView
+            android:id="@+id/lblHardDiskDrive"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint="Stockage : "
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblRam" />
+
+        <TextView
+            android:id="@+id/lblOther"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint="Autres : "
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblHardDiskDrive" />
+
+        <TextView
+            android:id="@+id/lblPrice"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint="Prix : "
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblOther" />
+
+        <TextView
+            android:id="@+id/lblScreenWidth"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:hint="Taille d'Ecran : "
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

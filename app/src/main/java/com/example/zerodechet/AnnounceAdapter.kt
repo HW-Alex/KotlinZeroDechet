@@ -28,7 +28,6 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
         val processor: String?  = _announceList.get(position).processor
         val screenWidth: String?  = _announceList.get(position).screenWidth
         val otherComponents: String?  = _announceList.get(position).otherComponents
-        val reserved: Boolean = _announceList.get(position).reserved as Boolean
         val url: String? = _announceList.get(position).url.toString()
         val view: View
         val listRowHolder: ListRowHolder
@@ -43,7 +42,7 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
             listRowHolder = view.tag as ListRowHolder
         }
         listRowHolder.title.text = title
-        listRowHolder.reserved.isChecked = reserved
+        listRowHolder.price.text = price
         // Ici on test si une URL existe dans la base pour cet élément, si non on charge l'image par defaut.
         if(!_announceList.get(position).url.isNullOrEmpty()) {
             Picasso.get().load(_announceList.get(position).url.toString()).resize(220, 0).into(listRowHolder.picture)
@@ -54,16 +53,16 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
         Handler().postDelayed({
             listRowHolder.loadingSpinner.setVisibility(View.GONE)
         }, 1500)
-        listRowHolder.reserved.setOnClickListener {
+        /*listRowHolder.reserved.setOnClickListener {
             _rowListener.onAnnounceChange(objectId, !reserved)
-        }
+        }*/
         listRowHolder.remove.setOnClickListener {
             _rowListener.onAnnounceDelete(objectId)
         }
         listRowHolder.modify.setOnClickListener {
             _rowListener.onAnnounceModify(it, objectId, title, price, ram, hardDiskDrive, processor, screenWidth, otherComponents, url)
         }
-        listRowHolder.title.setOnClickListener {
+        listRowHolder.picture.setOnClickListener {
             val intent = Intent(it.context, AnnounceDetailActivity::class.java)
             intent.putExtra("title", title)
             intent.putExtra("price", price)
@@ -72,6 +71,12 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
             intent.putExtra("processor", processor)
             intent.putExtra("screenWidth", screenWidth)
             intent.putExtra("otherComponents",otherComponents)
+            if(!url.isNullOrEmpty()) {
+                intent.putExtra("url", url)
+            } else {
+                intent.putExtra("url", urlDefault)
+
+            }
             // start your next activity
             startActivity(it.context, intent, null)
         }
@@ -93,10 +98,10 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
 
     private class ListRowHolder(row: View?) {
         val title: TextView = row!!.findViewById(R.id.txtAnnounceTitle) as TextView
-        val reserved: CheckBox = row!!.findViewById(R.id.chkDone) as CheckBox
+        val price: TextView = row!!.findViewById(R.id.txtPrice) as TextView
         val remove: ImageButton = row!!.findViewById(R.id.btnRemove) as ImageButton
         val modify: ImageButton = row!!.findViewById(R.id.btnModify) as ImageButton
-        val picture: ImageView = row!!.findViewById(R.id.imageView2) as ImageView
+        val picture: ImageView = row!!.findViewById(R.id.imageView) as ImageView
         val loadingSpinner: ProgressBar = row!!.findViewById(R.id.progressBar)
 
     }

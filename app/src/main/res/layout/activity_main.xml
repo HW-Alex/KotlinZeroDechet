@@ -47,19 +47,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_transparent" />
 
-    <!-- <FrameLayout
-         android:layout_width="match_parent"
-         android:layout_height="match_parent">
-
-
-         <ImageView
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:scaleType="centerCrop"
-             android:src="@drawable/capture3">
-
-         </ImageView>
-
-     </FrameLayout>
- -->
 </androidx.constraintlayout.widget.ConstraintLayout>
