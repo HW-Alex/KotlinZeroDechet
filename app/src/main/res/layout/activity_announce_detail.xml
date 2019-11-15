@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -11,6 +12,8 @@
         android:id="@+id/imageView"
         android:layout_width="170dp"
         android:layout_height="140dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,76 +22,57 @@
 
     <TextView
         android:id="@+id/txtTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="109dp"
+        android:layout_height="78dp"
         android:hint="Titre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        tools:layout_editor_absoluteX="273dp"
+        tools:layout_editor_absoluteY="422dp" />
 
     <TextView
         android:id="@+id/txtPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="238dp"
+        android:layout_height="61dp"
         android:hint="Prix"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtOther" />
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="559dp" />
 
     <TextView
         android:id="@+id/txtRam"
-        android:layout_width="405dp"
-        android:layout_height="13dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="224dp"
+        android:layout_height="66dp"
         android:hint="Ram"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="389dp" />
 
     <TextView
         android:id="@+id/txtHardDiskDrive"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_width="232dp"
+        android:layout_height="35dp"
         android:hint="Stockage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRam" />
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="189dp" />
 
     <TextView
         android:id="@+id/txtProcessor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="122dp"
+        android:layout_height="41dp"
         android:hint="Processeur"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHardDiskDrive" />
+        tools:layout_editor_absoluteX="260dp"
+        tools:layout_editor_absoluteY="246dp" />
 
     <TextView
         android:id="@+id/txtScreenWidth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="152dp"
+        android:layout_height="51dp"
         android:hint="Taille d'Ecran"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtProcessor" />
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="246dp" />
 
     <TextView
         android:id="@+id/txtOther"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="161dp"
+        android:layout_height="47dp"
         android:hint="Autres Caractéristiques"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtScreenWidth" />
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_editor_absoluteY="317dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

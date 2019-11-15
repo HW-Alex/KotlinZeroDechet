@@ -16,11 +16,6 @@ class HardwareDetailActivity : AppCompatActivity(){
         val screenWidth = intent.getStringExtra("screenWidth")
         val otherComponents = intent.getStringExtra("otherComponents")
         txtTitle.setText(title)
-        txtRam.setText(ram)
-        txtHardDiskDrive.setText(hardDiskDrive)
-        txtPrice.setText(price)
-        txtOther.setText(otherComponents)
-        txtScreenWidth.setText(screenWidth)
         txtProcessor.setText(processor)
     }
 }
