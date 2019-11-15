@@ -1,15 +1,16 @@
-package com.example.zerodechet
+package com.example.zerodechet.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.hardware_rows.*
+import com.example.zerodechet.Activities.HardwareDetailActivity
+import com.example.zerodechet.Model.Hardware
+import com.example.zerodechet.R
+import com.example.zerodechet.Services.HardwareRowListener
 
 
 class HardwareAdapter(context: Context, hardwareList: MutableList<Hardware>) : BaseAdapter() {

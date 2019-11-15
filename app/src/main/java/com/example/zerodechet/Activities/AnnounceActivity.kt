@@ -1,4 +1,4 @@
-package com.example.zerodechet
+package com.example.zerodechet.Activities
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -17,6 +17,11 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.zerodechet.Model.Announce
+import com.example.zerodechet.Model.Statics
+import com.example.zerodechet.R
+import com.example.zerodechet.Services.AnnounceRowListener
+import com.example.zerodechet.adapter.AnnounceAdapter
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.*
@@ -25,6 +30,7 @@ import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_announce.*
 import kotlinx.android.synthetic.main.content_announce.*
+import java.lang.Thread.sleep
 
 
 class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
@@ -91,7 +97,20 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
     }
     override fun onAnnounceDelete(objectId: String) {
         val announce = _db.child(Statics.FIREBASE_ANNOUNCE).child(objectId)
-        announce.removeValue()
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        builder.setTitle("Suppression")
+        val dialogLayout = inflater.inflate(R.layout.alert_dialog_deletion, null)
+        dialogLayout.findViewById<TextView>(R.id.textView).setText("Souhaitez-vous vraiment supprimer cette annonce ?")
+        builder.setView(dialogLayout)
+        builder.setNegativeButton("Supprimer") {
+                dialogInterface, i ->
+            announce.removeValue()
+        }
+        builder.setNeutralButton("Annuler") {
+                dialogInterface, i ->
+        }
+        builder.show()
     }
     override fun onAnnounceModify(view: View, objectId: String, title: String, price: String?,
                                   ram: String?, hardDiskDrive: String?, processor: String?,
@@ -135,6 +154,7 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
             _imageAnnounce.setImageURI(image_uri)
 
             uploadDataToFirebase(image_uri!!)
+            sleep(3000)
         }
     }
 
@@ -299,7 +319,6 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
 
             //check if the collection has any announce or not
             while (itemsIterator.hasNext()) {
-
                 //get current announce
                 val currentItem = itemsIterator.next()
                 val announce = Announce.create()

@@ -1,7 +1,8 @@
-package com.example.zerodechet
+package com.example.zerodechet.Activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.zerodechet.R
 import kotlinx.android.synthetic.main.activity_hardware_detail.*
 
 class HardwareDetailActivity : AppCompatActivity(){

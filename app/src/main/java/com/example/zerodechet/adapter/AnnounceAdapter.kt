@@ -1,4 +1,4 @@
-package com.example.zerodechet
+package com.example.zerodechet.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
+import com.example.zerodechet.Activities.AnnounceDetailActivity
+import com.example.zerodechet.Model.Announce
+import com.example.zerodechet.R
+import com.example.zerodechet.Services.AnnounceRowListener
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.announce_rows.*
 
 
 class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : BaseAdapter() {
@@ -31,7 +34,8 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
         val url: String? = _announceList.get(position).url.toString()
         val view: View
         val listRowHolder: ListRowHolder
-        val urlDefault = "https://firebasestorage.googleapis.com/v0/b/techbytrash.appspot.com/o/Images_Pc%2Fdefault.png?alt=media&token=86e5c1e1-95b6-4ed7-bb28-a4c3697609fe"
+        //Iage utilisée en cas de publication sans photo
+        val urlDefault = "https://firebasestorage.googleapis.com/v0/b/techbytrash.appspot.com/o/Images_Pc%2Fdefault.png?alt=media&token=b9053bf8-7e8d-4332-852b-c58e69483268"
 
         if (convertView == null) {
             view = _inflater.inflate(R.layout.announce_rows, parent, false)
@@ -53,9 +57,6 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
         Handler().postDelayed({
             listRowHolder.loadingSpinner.setVisibility(View.GONE)
         }, 1500)
-        /*listRowHolder.reserved.setOnClickListener {
-            _rowListener.onAnnounceChange(objectId, !reserved)
-        }*/
         listRowHolder.remove.setOnClickListener {
             _rowListener.onAnnounceDelete(objectId)
         }
@@ -71,6 +72,8 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
             intent.putExtra("processor", processor)
             intent.putExtra("screenWidth", screenWidth)
             intent.putExtra("otherComponents",otherComponents)
+            intent.putExtra("objectId", objectId)
+
             if(!url.isNullOrEmpty()) {
                 intent.putExtra("url", url)
             } else {

@@ -1,10 +1,11 @@
-package com.example.zerodechet
+package com.example.zerodechet.Activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.example.zerodechet.R
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.AuthResult

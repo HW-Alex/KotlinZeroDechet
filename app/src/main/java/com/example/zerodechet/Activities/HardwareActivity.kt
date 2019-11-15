@@ -1,15 +1,7 @@
-package com.example.zerodechet
+package com.example.zerodechet.Activities
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.ContentValues
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -17,12 +9,13 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
+import com.example.zerodechet.Model.Hardware
+import com.example.zerodechet.Model.Statics
+import com.example.zerodechet.R
+import com.example.zerodechet.Services.HardwareRowListener
+import com.example.zerodechet.adapter.HardwareAdapter
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_hardware.*
 import kotlinx.android.synthetic.main.content_hardware.*
 

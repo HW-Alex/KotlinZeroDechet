@@ -1,8 +1,9 @@
-package com.example.zerodechet
+package com.example.zerodechet.Model
 
 class Announce {
     companion object Factory {
-        fun create(): Announce = Announce()
+        fun create(): Announce =
+            Announce()
     }
 
     var objectId: String? = null

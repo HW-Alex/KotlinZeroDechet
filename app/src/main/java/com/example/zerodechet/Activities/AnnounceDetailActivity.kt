@@ -1,4 +1,4 @@
-package com.example.zerodechet
+package com.example.zerodechet.Activities
 
 import android.content.Intent
 import android.net.Uri
@@ -6,15 +6,22 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.zerodechet.R
+import com.example.zerodechet.Model.Statics
+import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_announce_detail.*
 
 class AnnounceDetailActivity : AppCompatActivity(){
 
     val mailPro = "machintruc77@gmail.com"
+    val _db = FirebaseDatabase.getInstance().reference
+    lateinit var objectId: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_announce_detail)
@@ -26,6 +33,8 @@ class AnnounceDetailActivity : AppCompatActivity(){
         val screenWidth = intent.getStringExtra("screenWidth")
         val otherComponents = intent.getStringExtra("otherComponents")
         val url = intent.getStringExtra("url")
+        val reserved = intent.getStringExtra("reserved")
+        objectId = intent.getStringExtra("objectId")!!
         txtTitle.setText(title)
         txtRam.setText(ram)
         txtHardDiskDrive.setText(hardDiskDrive)
@@ -36,24 +45,52 @@ class AnnounceDetailActivity : AppCompatActivity(){
         Picasso.get().load(url).into(imageView)
 
         btnReservation.setOnClickListener {
-
+            reservationForm(it)
         }
         btnContact.setOnClickListener {
-
+            contactForm(it)
         }
     }
+
+
 
     fun contactForm(view: View) {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         builder.setTitle("Nous Contacter")
-        val dialogLayout = inflater.inflate(R.layout.alert_dialog_announce, null)
-        val txtSubject  = dialogLayout.findViewById<EditText>(R.id.txtSubject)
-        val txtMessage  = dialogLayout.findViewById<EditText>(R.id.txtMessage)
+        val dialogLayout = inflater.inflate(R.layout.alert_dialog_contact, null)
+        val txtSubject  = dialogLayout.findViewById<EditText>(R.id.txtSubject).text
+        val txtMessage  = dialogLayout.findViewById<EditText>(R.id.txtMessage).text
         builder.setView(dialogLayout)
         builder.setPositiveButton("Envoyer") {
                 dialogInterface, i ->
             sendEmail(mailPro, txtSubject.toString(), txtMessage.toString())
+            }
+
+        builder.show()
+    }
+
+    fun reservationForm(view: View) {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        builder.setTitle("Réservation")
+        val dialogLayout = inflater.inflate(R.layout.alert_dialog_reservation, null)
+        dialogLayout.findViewById<TextView>(R.id.textView).setText("Vous vous apprétez à réserver le PC "
+                + " au prix de " + txtPrice.text + " . Nous reviendrons vers vous par mail ou sms.")
+
+        builder.setView(dialogLayout)
+        builder.setPositiveButton("Réserver") {
+                dialogInterface, i ->
+            val txtName  = dialogLayout.findViewById<EditText>(R.id.txtName).text.toString()
+            val txtFirstName  = dialogLayout.findViewById<EditText>(R.id.txtFirstName).text.toString()
+            val txtPhone  = dialogLayout.findViewById<EditText>(R.id.txtPhone).text.toString()
+            val subject = "Réservation de PC :  " + txtTitle.text
+            val message = "Bonjour, \n Je souhaiterais réserver votre pc " + txtTitle.text +
+                    " . \n\n Vous pouvez me contacter au $txtPhone, " +
+                    "ou par mail. \n\n Vous remerciant par avance, \n\n $txtFirstName $txtName"
+            sendEmail(mailPro, subject, message)
+            val announce = _db.child(Statics.FIREBASE_ANNOUNCE).child(objectId)
+            announce.child("reserved").setValue(true)
         }
         builder.show()
     }
@@ -75,7 +112,7 @@ class AnnounceDetailActivity : AppCompatActivity(){
         mIntent.putExtra(Intent.EXTRA_TEXT, message)
         try {
             //start email intent
-            startActivity(Intent.createChooser(mIntent, "Choose Email Client..."))
+            startActivity(Intent.createChooser(mIntent, "Choisissez une Application de Mail"))
         }
         catch (e: Exception){
             //if any thing goes wrong for example no email client application or any exception
@@ -83,6 +120,10 @@ class AnnounceDetailActivity : AppCompatActivity(){
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
 
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        //called when image was captured from camera intent
+            findViewById<Button>(R.id.btnReservation).setVisibility(View.GONE)
     }
 
 }

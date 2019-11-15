@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name=".Activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
@@ -20,24 +20,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".LoggedInActivity">
+            android:name=".Activities.LoggedInActivity">
         </activity>
         <activity
-            android:name=".AnnounceDetailActivity">
+            android:name=".Activities.AnnounceDetailActivity">
         </activity>
         <activity
-            android:name=".AnnounceActivity">
+            android:name=".Activities.AnnounceActivity">
         </activity>
         <activity
-            android:name=".HardwareDetailActivity">
+            android:name=".Activities.HardwareDetailActivity">
         </activity>
         <activity
-            android:name=".HardwareActivity">
+            android:name=".Activities.HardwareActivity">
         </activity>
     </application>
     <uses-permission android:name="android.permission.CAMERA"/>

@@ -1,9 +1,10 @@
-package com.example.zerodechet
+package com.example.zerodechet.Activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import com.example.zerodechet.R
 
 /**
  * A sample splash screen created by devdeeds.com

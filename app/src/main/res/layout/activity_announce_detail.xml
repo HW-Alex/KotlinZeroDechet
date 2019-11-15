@@ -11,12 +11,12 @@
 
     <Button
         android:id="@+id/btnContact"
-        android:layout_width="138dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="48dp"
+        android:layout_width="98dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/boutton_test"
-        android:text="Nous Contacter"
+        android:text="Contacter"
         app:layout_anchor="@+id/btnLogin"
         app:layout_anchorGravity="start|bottom"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,10 +25,10 @@
 
     <Button
         android:id="@+id/btnReservation"
-        android:layout_width="139dp"
-        android:layout_height="50dp"
+        android:layout_width="99dp"
+        android:layout_height="55dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="72dp"
         android:background="@drawable/boutton_test"
         android:text="Réserver"
         app:layout_anchor="@+id/btnLogin"

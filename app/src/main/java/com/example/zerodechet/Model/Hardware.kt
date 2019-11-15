@@ -1,8 +1,9 @@
-package com.example.zerodechet
+package com.example.zerodechet.Model
 
 class Hardware {
     companion object Factory {
-        fun create(): Hardware = Hardware()
+        fun create(): Hardware =
+            Hardware()
     }
 
     var objectId: String? = null

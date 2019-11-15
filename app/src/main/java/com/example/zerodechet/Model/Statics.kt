@@ -1,4 +1,4 @@
-package com.example.zerodechet
+package com.example.zerodechet.Model
 
 
 object Statics {
