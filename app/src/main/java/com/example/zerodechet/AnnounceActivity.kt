@@ -14,24 +14,28 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_announce.*
-import kotlinx.android.synthetic.main.alert_dialog_announce.*
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.content_announce.*
+
 
 class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
 
-    private val PERMISSION_CODE = 1000;
+    private val PERMISSION_CODE = 1000
     private val IMAGE_CAPTURE_CODE = 1001
     var image_uri: Uri? = null
+    var _urlPicture: String = ""
     lateinit var _db: DatabaseReference
     lateinit var _adapter: AnnounceAdapter
+    lateinit var _imageAnnounce: ImageView
     var _announceList: MutableList<Announce>? = null
     var _announceListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -42,6 +46,30 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
             Log.w("MainActivity", "loadItem:onCancelled", databaseError.toException())
         }
     }
+    val storage = FirebaseStorage.getInstance()
+
+    fun uploadDataToFirebase(uri: Uri) {
+        val fileRef = storage.reference.child("Images_Pc").child(uri.lastPathSegment.toString())
+        var uploadTask = fileRef.putFile(image_uri!!)
+        val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            return@Continuation fileRef.downloadUrl
+        }).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                _urlPicture = downloadUri.toString()
+
+            } else {
+                Toast.makeText(this, "An error occur", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_announce)
@@ -67,9 +95,9 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
     }
     override fun onAnnounceModify(view: View, objectId: String, title: String, price: String?,
                                   ram: String?, hardDiskDrive: String?, processor: String?,
-                                  screenWidth: String?, otherComponents: String? ) {
+                                  screenWidth: String?, otherComponents: String?, url: String? ) {
         modifyAnnounceForm(view, objectId, title, price, ram, hardDiskDrive,
-            processor, screenWidth, otherComponents)
+            processor, screenWidth, otherComponents, url)
     }
 
     private fun openCamera() {
@@ -104,7 +132,9 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
         //called when image was captured from camera intent
         if (resultCode == Activity.RESULT_OK){
             //set image captured to image view
-            imageView.setImageURI(image_uri)
+            _imageAnnounce.setImageURI(image_uri)
+
+            uploadDataToFirebase(image_uri!!)
         }
     }
 
@@ -137,39 +167,43 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
         val txtProcessor  = dialogLayout.findViewById<EditText>(R.id.txtProcessor)
         val txtScreenWidth  = dialogLayout.findViewById<EditText>(R.id.txtScreenWidth)
         val txtOther  = dialogLayout.findViewById<EditText>(R.id.txtOther)
+        _imageAnnounce = dialogLayout.findViewById(R.id.imageView)
         builder.setView(dialogLayout)
         builder.setPositiveButton("Ajouter") {
                 dialogInterface, i -> addAnnounce(txtTitle.text.toString(),txtPrice.text.toString(),
             txtRam.text.toString(),txtHardDiskDrive.text.toString(),txtProcessor.text.toString(),
             txtScreenWidth.text.toString(),txtOther.text.toString())
         }
-        builder.setNeutralButton("Prendre une Photo") {
-                    dialogInterface, i ->
-                //if system os is Marshmallow or Above, we need to request runtime permission
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if (checkSelfPermission(Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_DENIED ||
-                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_DENIED){
-                        //permission was not enabled
-                        val permission = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        //show popup to request permission
-                        requestPermissions(permission, PERMISSION_CODE)
-                    }
-                    else{
-                        //permission already granted
-                        openCamera()
-                    }
-                }
-                else{
-                    //system os is < marshmallow
-                    openCamera()
-                }
+        dialogLayout.findViewById<Button>(R.id.btnImage).setOnClickListener { view ->
+            cameraCheck()
         }
         builder.show()
     }
-
-    fun modifyAnnounceForm(view: View, objectId: String, title: String, price: String?, ram: String?, hardDiskDrive: String?, processor: String?, screenWidth: String?, otherComponents: String?) {
+    fun cameraCheck() {
+        //if system os is Marshmallow or Above, we need to request runtime permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED ||
+                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_DENIED
+            ) {
+                //permission was not enabled
+                val permission = arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                //show popup to request permission
+                requestPermissions(permission, PERMISSION_CODE)
+            } else {
+                //permission already granted
+                openCamera()
+            }
+        } else {
+            //system os is < marshmallow
+            openCamera()
+        }
+    }
+    fun modifyAnnounceForm(view: View, objectId: String, title: String, price: String?, ram: String?, hardDiskDrive: String?, processor: String?, screenWidth: String?, otherComponents: String?, url: String?) {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         builder.setTitle("Modifier l'Annonce")
@@ -181,6 +215,10 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
         dialogLayout.findViewById<EditText>(R.id.txtProcessor).setText(processor)
         dialogLayout.findViewById<EditText>(R.id.txtScreenWidth).setText(screenWidth)
         dialogLayout.findViewById<EditText>(R.id.txtOther).setText(otherComponents)
+        //On récupère l'URL uniquement si il y en a une valorisée en base
+        if(!url.isNullOrEmpty()) {
+            Picasso.get().load(url).into(dialogLayout.findViewById<ImageView>(R.id.imageView))
+        }
         val txtTitle  = dialogLayout.findViewById<EditText>(R.id.txtTitle).text
         val txtPrice  = dialogLayout.findViewById<EditText>(R.id.txtPrice).text
         val txtRam  = dialogLayout.findViewById<EditText>(R.id.txtRam).text
@@ -188,6 +226,7 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
         val txtProcessor  = dialogLayout.findViewById<EditText>(R.id.txtProcessor).text
         val txtScreenWidth  = dialogLayout.findViewById<EditText>(R.id.txtScreenWidth).text
         val txtOther  = dialogLayout.findViewById<EditText>(R.id.txtOther).text
+        _imageAnnounce = dialogLayout.findViewById(R.id.imageView)
         builder.setView(dialogLayout)
         builder.setPositiveButton("Modifier") { dialogInterface, i ->
             modifyAnnounce(
@@ -195,6 +234,9 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
                 txtRam.toString(), txtHardDiskDrive.toString(), txtProcessor.toString(),
                 txtScreenWidth.toString(), txtOther.toString()
             )
+        }
+        dialogLayout.findViewById<Button>(R.id.btnImage).setOnClickListener { view ->
+            cameraCheck()
         }
         builder.show()
     }
@@ -211,6 +253,8 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
         announce.screenWidth = screen
         announce.otherComponents = other
         announce.reserved = false
+        announce.url = _urlPicture
+        _urlPicture = ""
 
         //Get the object id for the new announce from the Firebase Database
         val newAnnounce = _db.child(Statics.FIREBASE_ANNOUNCE).push()
@@ -234,6 +278,8 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
         announce.child("screenWidth").setValue(screen)
         announce.child("otherComponents").setValue(other)
         announce.child("reserved").setValue(false)
+        announce.child("url").setValue(_urlPicture)
+        _urlPicture = ""
         Toast.makeText(this, "Annonce modifiée : " + title, Toast.LENGTH_SHORT).show()
     }
 
@@ -271,8 +317,7 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
                 announce.processor = map.get("processor") as String?
                 announce.screenWidth = map.get("screenWidth") as String?
                 announce.otherComponents = map.get("otherComponents") as String?
-
-
+                announce.url = map.get("url") as String?
                 _announceList!!.add(announce)
             }
         } else {
@@ -281,6 +326,5 @@ class AnnounceActivity : AppCompatActivity(), AnnounceRowListener {
 
         //alert adapter that has changed
         _adapter.notifyDataSetChanged()
-
     }
 }

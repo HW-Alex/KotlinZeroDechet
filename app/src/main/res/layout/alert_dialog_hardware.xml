@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:contentDescription="Image de l'annonce"
+        android:contentDescription="Image de la pièce"
         android:layout_width="170dp"
         android:layout_height="140dp"
         android:scaleType="centerCrop"

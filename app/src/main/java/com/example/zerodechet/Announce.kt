@@ -14,4 +14,5 @@ class Announce {
     var screenWidth: String? = null
     var otherComponents: String? = null
     var reserved: Boolean? = false
+    var url: String? = null
 }

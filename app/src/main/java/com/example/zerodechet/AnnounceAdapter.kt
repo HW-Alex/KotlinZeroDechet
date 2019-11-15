@@ -2,11 +2,13 @@ package com.example.zerodechet
 
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.announce_rows.*
 
 
@@ -27,9 +29,10 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
         val screenWidth: String?  = _announceList.get(position).screenWidth
         val otherComponents: String?  = _announceList.get(position).otherComponents
         val reserved: Boolean = _announceList.get(position).reserved as Boolean
-
+        val url: String? = _announceList.get(position).url.toString()
         val view: View
         val listRowHolder: ListRowHolder
+        val urlDefault = "https://firebasestorage.googleapis.com/v0/b/techbytrash.appspot.com/o/Images_Pc%2Fdefault.png?alt=media&token=86e5c1e1-95b6-4ed7-bb28-a4c3697609fe"
 
         if (convertView == null) {
             view = _inflater.inflate(R.layout.announce_rows, parent, false)
@@ -39,9 +42,18 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
             view = convertView
             listRowHolder = view.tag as ListRowHolder
         }
-
         listRowHolder.title.text = title
         listRowHolder.reserved.isChecked = reserved
+        // Ici on test si une URL existe dans la base pour cet élément, si non on charge l'image par defaut.
+        if(!_announceList.get(position).url.isNullOrEmpty()) {
+            Picasso.get().load(_announceList.get(position).url.toString()).resize(220, 0).into(listRowHolder.picture)
+
+        } else {
+            Picasso.get().load(urlDefault).resize(220, 0).into(listRowHolder.picture)
+        }
+        Handler().postDelayed({
+            listRowHolder.loadingSpinner.setVisibility(View.GONE)
+        }, 1500)
         listRowHolder.reserved.setOnClickListener {
             _rowListener.onAnnounceChange(objectId, !reserved)
         }
@@ -49,7 +61,7 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
             _rowListener.onAnnounceDelete(objectId)
         }
         listRowHolder.modify.setOnClickListener {
-            _rowListener.onAnnounceModify(it, objectId, title, price, ram, hardDiskDrive, processor, screenWidth, otherComponents)
+            _rowListener.onAnnounceModify(it, objectId, title, price, ram, hardDiskDrive, processor, screenWidth, otherComponents, url)
         }
         listRowHolder.title.setOnClickListener {
             val intent = Intent(it.context, AnnounceDetailActivity::class.java)
@@ -84,5 +96,8 @@ class AnnounceAdapter(context: Context, announceList: MutableList<Announce>) : B
         val reserved: CheckBox = row!!.findViewById(R.id.chkDone) as CheckBox
         val remove: ImageButton = row!!.findViewById(R.id.btnRemove) as ImageButton
         val modify: ImageButton = row!!.findViewById(R.id.btnModify) as ImageButton
+        val picture: ImageView = row!!.findViewById(R.id.imageView2) as ImageView
+        val loadingSpinner: ProgressBar = row!!.findViewById(R.id.progressBar)
+
     }
 }
